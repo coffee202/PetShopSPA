@@ -1,5 +1,4 @@
 import {deletaCliente, listarClientes} from '../../api/cliente.js';
-import inicializaCadastro from '../cadastro/componente-cadastro.js';
 import "../../assets/css/clientes.css";
 
 const removeCliente = (id) => {
@@ -10,34 +9,10 @@ const removeCliente = (id) => {
   }
 }
 
-const conteudo = `
-  <thead class= "thead-dark"> 
-    <tr> 
-      <th scope="col">CPF</th>
-      <th scope="col">Nome</th>
-      <th scope="col"></th>
-      <th scope="col"><a class="btn btn-primary">Novo Cliente</a></th>
-    </tr>
-  </thead>
+const criarCorpoTabela = (tabela) => {
+  const corpoTabela = document.createElement('tbody');
 
-`
-const container = document.querySelector('[data-container]'); 
-const tabela = document.createElement("table");
-
-tabela.innerHTML = conteudo;
-tabela.classList.add("table");
-
-container.appendChild(tabela);
-
-const novoCliente = document.querySelector('.btn')
-
-novoCliente.addEventListener('click', () => {
-  inicializaCadastro()
-})
-
-const corpoTabela = document.createElement('tbody');
-
-const exibeCliente = (cpf, nome, id) => {
+  const exibeCliente = (cpf, nome, id) => {
     const linha = document.createElement('tr');
 
     const conteudoLinha = `
@@ -49,18 +24,58 @@ const exibeCliente = (cpf, nome, id) => {
     </a>    
 `
     linha.innerHTML = conteudoLinha;
-    return linha;
+    return linha
   };
-  
+
   listarClientes().then( exibe => {
-  exibe.forEach(indice => {
-    corpoTabela.appendChild(exibeCliente(indice.cpf, indice.nome, indice.id))
-  })
- }
+    exibe.forEach(indice => {
+      corpoTabela.appendChild(exibeCliente(indice.cpf, indice.nome, indice.id))
+    })
+   })
 
- )
+   tabela.appendChild(corpoTabela);
 
- tabela.appendChild(corpoTabela);
+}
+
+const inicializaTabela = () =>{
+  
+  
+  const cabecalho = `
+  <thead class= "thead-dark"> 
+    <tr> 
+      <th scope="col">CPF</th>
+      <th scope="col">Nome</th>
+      <th scope="col"></th>
+      <th scope="col"><a class="btn btn-primary" onClick="navegacao('/cadastro'); return false;">Novo Cliente</a></th>
+    </tr>
+  </thead>
+  `
+  const tabela = document.createElement("table");
+  tabela.innerHTML = cabecalho;
+  tabela.classList.add("table");
+
+  criarCorpoTabela(tabela);
+
+  return tabela
+}
+
+
+
+export default inicializaTabela
+
+
+
+
+
+
+
+
+  
+ 
+
+ 
+
+
   
   
  

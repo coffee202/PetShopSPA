@@ -1,6 +1,8 @@
-import inicializaCadastro from "./componentes/cadastro/componente-cadastro"
-;
+import inicializaCadastro from "./componentes/cadastro/componente-cadastro";
+import inicializaTabela from "./componentes/lista/listagem-cliente";
+
 const rotas ={
+  "/": inicializaTabela,
   "/cadastro": inicializaCadastro
 }
 
@@ -17,5 +19,11 @@ const navegacao = pathname =>{
   rootDiv.appendChild(inicarRota());
 }
 
+window.navegacao = navegacao
 
+window.onpopstate= () =>{
+
+  rootDiv.innerHTML = ""
+  rootDiv.appendChild(rotas[window.location.pathname]())
+}
 export{ navegacao} 
