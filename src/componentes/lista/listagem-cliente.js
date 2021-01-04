@@ -8,6 +8,15 @@ const removeCliente = (id) => {
     window.location.reload()
   }
 }
+const criarBotaoExcuir = (id) =>{
+  const botao = document.createElement('button');
+  botao.classList.add('btn', 'btn-danger');
+  botao.innerHTML= 'Excuir'
+  botao.addEventListener('click',()=>{
+    removeCliente(id)
+  })
+  return botao
+}
 
 const criarCorpoTabela = (tabela) => {
   const corpoTabela = document.createElement('tbody');
@@ -18,12 +27,11 @@ const criarCorpoTabela = (tabela) => {
     const conteudoLinha = `
     <td>${cpf}</td>
     <td>${nome}</td>
-    <button type="button" class="btn btn-danger" onclick="removeCliente(${id})">Excluir</button>
-    <a href="./componentes/edita/edita-clientes.html?id=${id}">
-    <button type=""button class="btn btn-info">Editar</button>
-    </a>    
+    
+    < type="button" class="btn btn-info" onClick="navegacao('/edita?id=${id}'); return false;">Editar</>
 `
     linha.innerHTML = conteudoLinha;
+    linha.appendChild(criarBotaoExcuir(id))
     return linha
   };
 
